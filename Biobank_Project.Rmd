@@ -1,0 +1,69 @@
+---
+title: "Biobank_Project"
+author: "Pluem"
+date: "10/6/2564"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#set working directory
+setwd("C:/Users/Admin/Documents/GitHub/Biobank_Project/Biobank_Sum/Biobank_Project")
+```
+
+```{r}
+#Import Biobank Data
+library(readr)
+data2010_complete_v2 <- read_csv("~/GitHub/Biobank_Project/Data/data2010_complete_v2.csv")
+data2011_complete_v2 <- read_csv("~/GitHub/Biobank_Project/Data/data2011_complete_v2.csv")
+data2012_complete_v2 <- read_csv("~/GitHub/Biobank_Project/Data/data2012_complete_v2.csv")
+data2013_complete_v2 <- read_csv("~/GitHub/Biobank_Project/Data/data2013_complete_v2.csv")
+data2014_complete_v2 <- read_csv("~/GitHub/Biobank_Project/Data/data2014_complete_v2.csv")
+data2015_complete_v2 <- read_csv("~/GitHub/Biobank_Project/Data/data2015_complete_v2.csv")
+data2016_complete_v2 <- read_csv("~/GitHub/Biobank_Project/Data/data2016_complete_v2.csv")
+data2017_complete_v2 <- read_csv("~/GitHub/Biobank_Project/Data/data2017_complete_v2.csv")
+data2018_complete_v2 <- read_csv("~/GitHub/Biobank_Project/Data/data2018_complete_v2.csv")
+data2019_complete_v2 <- read_csv("~/GitHub/Biobank_Project/Data/data2019_complete_v2.csv")
+data2020_complete_AugSep_v2 <- read_csv("~/GitHub/Biobank_Project/Data/data2020_complete_AugSep_v2.csv")
+```
+
+```{r}
+#bind all data 
+rbind(data2010_complete_v2,data2011_complete_v2,data2012_complete_v2,data2013_complete_v2,data2014_complete_v2,data2015_complete_v2,data2016_complete_v2,data2017_complete_v2,data2018_complete_v2,data2019_complete_v2,data2020_complete_AugSep_v2) 
+```
+
+```{r}
+#create data frame
+totaldata <- rbind(data2010_complete_v2,data2011_complete_v2,data2012_complete_v2,data2013_complete_v2,data2014_complete_v2,data2015_complete_v2,data2016_complete_v2,data2017_complete_v2,data2018_complete_v2,data2019_complete_v2,data2020_complete_AugSep_v2)
+```
+
+```{r}
+#Recode columns name and summary
+library(plyr)
+totaldata$TYPE <- mapvalues(totaldata$TYPE, from = "Diseased Tissue", to = "Diseased Tissue (A)")
+totaldata$TYPE <- mapvalues(totaldata$TYPE, from = "Normal Tissue", to = "Normal Tissue (A)")
+table(totaldata$COLLECTION_CODE,totaldata$TYPE)
+```
+```{r}
+#Check length
+length(unique(totaldata$PATIENT_ANONYMOUSCODE))
+```
+
+```{r}
+#Dubicate ID in PATIENT_ANONYMOUSCODE
+library(dplyr)
+newdata <-totaldata[!duplicated(totaldata$PATIENT_ANONYMOUSCODE), ]
+table(newdata$COLLECTION_CODE)
+```
+
+
+
+
+
+
+
+
+
